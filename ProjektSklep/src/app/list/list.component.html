@@ -1,0 +1,83 @@
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+
+
+
+
+
+
+<form id="filter">
+    <label> Filtruj filmy po kategorii </label>
+    <input type="text" [(ngModel)]="term" [ngModelOptions]="{standalone: true}" />
+</form>
+<h4>Tagi: </h4>
+<a href="./list:adventure"><button type="button" class="btn btn-warning">Adventure</button></a>
+<a href="./list:fantasy"><button type="button" class="btn btn-warning">Fantasy</button></a>
+<a href="./list:sciFi"><button type="button" class="btn btn-warning">SciFi</button></a>
+<a href="./list:comedy"><button type="button" class="btn btn-warning">Comedy</button></a>
+
+<h3> Dostępne produkty: </h3>
+<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Nazwa</th>
+            <th>Kategorie</th>
+            <th>Dostępność</th>
+            <th>Ile pozostało</th>
+            <th>Opłata za egzemplarz</th>
+            <th>Dodaj</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor='let movie of movies | filter:term ; let i = index'>
+            <td>{{i}}</td>
+            <td>{{movie.name.toString() }}</td>
+            <td>{{movie.categoryIds.toString() }}</td>
+            <td>{{movie.isAvailable.toString() | dostepny | niedostepny }}</td>
+
+            <td>{{movie.copiesLeft}}</td>
+            <td>{{movie.fee}} zł</td>
+            <td>
+                <button class="btn btn-success btn-lg" (click)="addToCart(movie)"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="items">Dodaj</span></button>
+                <!--<button class="btn btn-danger btn-lg"  (click)="remove(movie)" data-toggle="tooltip" data-placement="bottom" title="Nic jeszcze nie zamówiłeś"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="items">Usuń</span></button>-->
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+<div (click)="redirect()"> <button class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-shopping-cart" routerLink="order" ></span> Potwierdź wybór </button></div>
+
+
+<br><br><br><br><br><br>
+
+<h3> Twoja lista: </h3>
+
+
+<table id="example1" #listValue class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Nazwa</th>
+            <th>Kategorie</th>
+            <th>Opłata za egzemplarz</th>
+            <th>Usuń</th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        <tr *ngFor='let movie of moviesCart | filter:term ; let i = index'>
+            <td>{{i}}</td>
+            <td>{{movie.name.toString() }}</td>
+            <td>{{movie.categoryIds.toString() }}</td>
+            <td>{{movie.fee}} zł</td>
+            <td>
+                <button class="btn btn-danger btn-lg" (click)="remove1(i)" data-toggle="tooltip" data-placement="bottom" title="Nic jeszcze nie zamówiłeś"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="items">Usuń</span></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
