@@ -2,7 +2,23 @@
 
 
 
-### Użyte wersje 
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+
+
+
+
+
+### Użyte wersje oprogramownia:  
 ```sh
 npm 4.0.5
 node 7.4.0
